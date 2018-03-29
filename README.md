@@ -39,7 +39,7 @@ Shows the frequency of checkins by hour for each day of the week.
 When a user hovers over a shaded box, the number of checkins will be displayed.
 
 
-**more to come**
+**more graphs to come**
 
 # Utilizing D3
 • Scatterplot with axis
