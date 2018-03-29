@@ -1,5 +1,5 @@
 # Team special-sniffle
-# Marcus Ng, Adeebur Rahman, and Edmond Wong
+### Marcus Ng, Adeebur Rahman, and Edmond Wong
 
 # Dataset
 [Yelp Dataset](https://www.yelp.com/dataset)
