@@ -19,9 +19,9 @@ We want to figure out what factors influence a NYC business' rating on Yelp and 
 Select a NYC business from a dropdown list.
 Show selected business information.
 
-**Scatter Plot:** Number of Photos (x) vs. Average Rating (y)
+**Scatter Plot:** Average Rating (x) vs. Number of Photos (y)
 
-Compares the number of photos to the average rating of each business to find a correlation.
+Compares the average rating to the number of photos of each business to find a correlation.
 
 Selected business is highlighted.
 
