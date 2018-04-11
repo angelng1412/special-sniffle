@@ -13,15 +13,15 @@ tip.json
 ```
 
 # Significance
-We want to figure out what factors influence a NYC business' rating on Yelp and find similarities between highly rated businesses.
+We want to figure out what factors influence a business' rating on Yelp and find similarities between highly rated businesses.
 
 # Data Visualization
-Select a NYC business from a dropdown list.
+Select a business from a dropdown list.
 Show selected business information.
 
-**Scatter Plot:** Average Rating (x) vs. Number of Photos (y)
+**Scatter Plot:** Number of Photos (x) vs. Average Rating (y)
 
-Compares the average rating to the number of photos of each business to find a correlation.
+Compares the number of photos to the average rating of each business to find a correlation.
 
 Selected business is highlighted.
 
@@ -30,7 +30,7 @@ When a user hovers over a data point, information about the corresponding busine
 Clicking on a datapoint would change the selected business.
 
 
-**Pie Chart:** Density of stores by NYC neighborhood (one pie chart per neighborhood)
+**Pie Chart:** Density of stores by neighborhood (one pie chart per neighborhood)
 
 Classified by average rating (0-5, every .5) to see how many ba
 
