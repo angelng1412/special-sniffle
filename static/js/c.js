@@ -20,7 +20,7 @@ var graph = function (numx, numy, xlabels, ylabels, pointlabels) {
   var y_scale = y_max/(height - (height/num_yticks));
   var x_scale = x_max/((num_xticks-1)*(width/num_xticks));
   var points = container.selectAll("circle").data(x).enter();
-  points.append("circle").attr("cx", function(d) { return 50 + d/x_scale; }).attr("cy", function(d, i) { return -25 + height - (y[i]/y_scale); }).attr("fill", "lightsteelblue").attr("r", 10);
+  points.append("circle").attr("cx", function(d) { return 50 + d/x_scale; }).attr("cy", function(d, i) { return -25 + height - (y[i]/y_scale); }).attr("fill", "lightsteelblue").attr("r", 10).attr("class", "point");
   if (xlabels) {
     var x_label_data = [];
     for (var i = 0; i<num_xticks; i++) {
