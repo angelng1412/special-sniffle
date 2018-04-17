@@ -1,8 +1,8 @@
-var data = null;
+var dataset = null;
 var getState = function(){};
-var count = {};
-var pie = [];
-var makePieChartData = function(){
+var makePieChartData = function(data){
+	var count = {};
+	var pie = [];
 	var keys = data.keys();
 	var i = 0;
 	var total = 0;
@@ -18,8 +18,26 @@ var makePieChartData = function(){
 		}
 	}
 	i = 0;
-	keys = pie.keys()
+	keys = count.keys()
 	while(i < keys.length){
 		pie.append([keys[i], (count[keys[i]] / total) * 2 * Math.PI]);
 	}
+	return pie
+};
+
+var makeCanvas = function(width, height){
+	var canvas = document.createElement("canvas");
+	canvas.width = width;
+	canvas.height = height;
+};
+
+var drawPieChart = function(canvas,pieData){
+
+};
+
+var createPieChart = function(){
+	var canvas = makeCanvas(1000,1000);
+	var pieData = makePieChartData(dataset);
+	drawPieChart(canvas, pieData);
+	//to be implemented, insert pie chart to dom
 };
