@@ -1,5 +1,6 @@
+var pieChartSection = document.getElementById("pieChart");
 var dataset = null;
-var getState = function(){};
+var getState = function(key){};
 var makePieChartData = function(data){
 	var count = {};
 	var pie = [];
@@ -32,12 +33,25 @@ var makeCanvas = function(width, height){
 };
 
 var drawPieChart = function(canvas,pieData){
-
+	var ctx = canvas.getContext("2d");
+	var start = 0;
+	ctx.clearRect(0,0,canvas.width,canvas.height);
+	ctx.beginPath();
+	for(var i = 0; i < pie.length; i++){
+		var end = start + pie[i][1];
+		ctx.arc(canvas.width/2, canvas.height/2, canvas.width/2, start, end);
+		ctx.stroke();
+		ctx.fill();
+		start = end;
+	}
 };
 
 var createPieChart = function(){
 	var canvas = makeCanvas(1000,1000);
+	d3.json("../../data/scatter.json", function(data){
+		dataset = data;
+	}
 	var pieData = makePieChartData(dataset);
+	pieChartSection.appendChild(canvas);
 	drawPieChart(canvas, pieData);
-	//to be implemented, insert pie chart to dom
 };
