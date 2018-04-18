@@ -50,7 +50,7 @@ var createPieChart = function(){
 	var canvas = makeCanvas(1000,1000);
 	d3.json("../../data/scatter.json", function(data){
 		dataset = data;
-	}
+	});
 	var pieData = makePieChartData(dataset);
 	pieChartSection.appendChild(canvas);
 	drawPieChart(canvas, pieData);
