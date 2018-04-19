@@ -1,4 +1,4 @@
-from flask import Flask, render_template, redirect, url_for, Response
+from flask import Flask, render_template, redirect, url_for, Response, request
 from utils import yelp
 
 app = Flask(__name__)
@@ -24,7 +24,14 @@ def csv(bid):
 
 @app.route("/heatmap")
 def heatmap():
-    return render_template("heatmap.html", datasets = yelp.get_bids())
+    return render_template("heatmap.html", datasets = sorted(yelp.get_names()))
+
+@app.route("/get_bid", methods = ['POST'])
+def get_bid():
+    if "name" in request.form:
+        return Response(yelp.get_bid(request.form["name"]))
+    else:
+        return redirect( url_for('root'))
 
 if __name__ == "__main__":
     app.debug = True
