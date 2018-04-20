@@ -21,3 +21,6 @@ worked on pie chart
 edmondW -- 2018-04-20 14:34:29
 pie chart works./log.sh !
 
+edmondW -- 2018-04-20 14:50:52
+working on sorting data
+
