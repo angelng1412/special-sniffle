@@ -63,9 +63,28 @@ var drawPieChart = function(canvas,pieData){
 	}
 };
 
+var sortDataH = function(data,index){
+	for(var i = index; i >= 0; i--){
+		if(data[index][1] > data[i][1]){
+			
+		}
+	}
+};
+
+var sortData = function(data){
+	//insertion sort
+	if(data.length <= 1){
+		return data;
+	}
+	for(var i = 0; i < data.length; i++){
+		data.splice(sortDataH(data,i),0,data.pop(i));
+	}
+	return data
+};
+
 var createPieChart = function(){
 	d3.json("scatter.json", function(data){
-		dataset = data;
+		dataset = sortData(data);
 		var pieData = makePieChartData(dataset);
 		drawPieChart(canvas, pieData);
 	});
