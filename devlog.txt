@@ -19,8 +19,11 @@ edmondW -- 2018-04-17 14:51:13
 worked on pie chart
 
 edmondW -- 2018-04-20 14:34:29
-pie chart works./log.sh !
+pie chart works
 
 edmondW -- 2018-04-20 14:50:52
 working on sorting data
+
+marcusN -- 2018-04-21 18:35:24
+bootstrap
 

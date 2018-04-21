@@ -9,7 +9,7 @@ def not_found_error(error):
 
 @app.route("/")
 def root():
-    return render_template("base.html")
+    return render_template("home.html")
 
 @app.route("/scatter")
 def scatter():
