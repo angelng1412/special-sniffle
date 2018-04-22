@@ -17,7 +17,7 @@ def csv(bid):
     if yelp.in_dataset(bid):
         return Response(yelp.get_csv(bid), mimetype='text/plain')
     else:
-        return render_template('404.html'), 404
+        return redirect( url_for('root'))
 
 @app.route("/heatmap")
 def heatmap():
@@ -33,6 +33,10 @@ def get_bid():
 @app.route("/get_scatter")
 def get_scatter():
     return Response(yelp.get_scatter_dataset(), mimetype='text/plain')
+
+@app.route("/piechart")
+def pie():
+    return render_template("piechart.html")
 
 if __name__ == "__main__":
     app.debug = True
