@@ -1,75 +1,75 @@
-var svg = document.getElementById("slate");
-var width = Number(svg.getAttribute("width"));
-var height = Number(svg.getAttribute("height"));
-var container = d3.select("svg");
-var x = [], y = [];
+var xdata = [];
+var ydata = [];
+
 var get_data = function() {
   $.ajax({
-    url: '/get_scatter',
+    url: 'http://localhost:5000/get_scatter',
     success: function(d) {
+      console.log("success");
       var j = JSON.parse(d);
       Object.keys(j).forEach(function(key) {
-        x.push(j[key]["rating"]);
-        y.push(j[key]["num_photos"]);
+        xdata.push(j[key]["rating"]);
+        ydata.push(j[key]["num_photos"]);
       });
     },
     async: false
   });
 };
 get_data();
-var x_max = Math.max(...x), y_max = Math.max(...y);
-var x_axis = "Rating";
-var y_axis = "Number of Photos";
 
+var margin = {top: 20, right: 15, bottom: 60, left: 60};
+var width = 960 - margin.left - margin.right;
+var height = 850 - margin.top - margin.bottom;
 
-var clear_svg = function() {
-  while (svg.firstChild) svg.removeChild(svg.firstChild);
-};
+var x = d3.scale.linear()
+    .domain([0, d3.max(xdata)])
+    .range([ 0, width ]);
 
-var graph = function (numx, numy, xlabels, ylabels, pointlabels) {
-  clear_svg();
-  var num_xticks = numx, num_yticks = numy;
-  var y_scale = y_max/(height - (height/num_yticks));
-  var x_scale = x_max/((num_xticks-1)*(width/num_xticks));
-  var points = container.selectAll("circle").data(x).enter();
-  points.append("circle").attr("cx", function(d) { return 50 + d/x_scale; }).attr("cy", function(d, i) { return -25 + height - (y[i]/y_scale); }).attr("fill", "lightsteelblue").attr("r", 10).attr("class", "point");
-  if (xlabels) {
-    var x_label_data = [];
-    for (var i = 0; i<num_xticks; i++) {
-      x_label_data.push( ((i*x_max)/(num_xticks-1)).toFixed(2) );
-    }
-    var x_labels = container.selectAll("#x_label").data(x_label_data).enter();
-    x_labels.append("text").attr("x", function(d,i) { return 25 + i*(width/num_xticks); } ).attr("y", height - 25).text(function(d) { return d; });
-    container.selectAll("#x_axis").data([x_axis]).enter().append("text").attr("x", width/2).attr("y", height).attr("text-anchor","middle").text(function(d) { return d; });
-  }
-  if (ylabels) {
-    var y_label_data = [];
-    for (i = 0; i<num_yticks; i++) {
-      y_label_data.push( ((i*y_max)/(num_yticks-1)).toFixed(2) );
-    }
-    var y_labels = container.selectAll("#y_label").data(y_label_data).enter();
-    y_labels.append("text").attr("x", 25).attr("y", function(d,i) { return -25 + (num_yticks-i)*(height/num_yticks); } ).text(function(d) { return d; });
-    container.selectAll("#y_axis").data([y_axis]).enter().append("text").attr("x", 15).attr("y", height/2).attr("text-anchor", "middle").attr("transform", function() { return "rotate(270 15 " + height/2 + ")"; }).text(function(d) { return d; });
-  }
-  if (pointlabels) {
-    var point_labels = container.selectAll("#point_label").data(x).enter();
-    point_labels.append("text").attr("x", function(d) { return 50 + d/x_scale; }).attr("y", function(d, i) { return -25 + height - (y[i]/y_scale); }).text(function(d, i) { return "" + d + ", " + y[i]; }).attr("text-anchor", "middle");
-  }
-};
+var y = d3.scale.linear()
+    .domain([0, d3.max(ydata)])
+    .range([ height, 0 ]);
 
-var includex = document.getElementById("x");
-var includey = document.getElementById("y");
-var includep = document.getElementById("point");
-var xtick = document.getElementById("xt");
-var ytick = document.getElementById("yt");
+var chart = d3.select('#chart')
+    .append('svg:svg')
+    .attr('width', width + margin.right + margin.left)
+    .attr('height', height + margin.top + margin.bottom)
+    .attr('class', 'chart');
 
-var update_graph = function() {
-  graph(Number(xtick.value), Number(ytick.value), includex.checked, includey.checked, includep.checked);
-};
-includex.addEventListener("change", update_graph);
-includey.addEventListener("change", update_graph);
-includep.addEventListener("change", update_graph);
-xtick.addEventListener("change", update_graph);
-ytick.addEventListener("change", update_graph);
+var main = chart.append('g')
+    .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')')
+    .attr('width', width)
+    .attr('height', height)
+    .attr('class', 'main');
 
-update_graph();
+var xAxis = d3.svg.axis()
+    .scale(x)
+    .orient('bottom');
+
+main.append('g')
+  .attr('transform', 'translate(0,' + height + ')')
+  .attr('class', 'main axis date')
+  .call(xAxis);
+
+var yAxis = d3.svg.axis()
+    .scale(y)
+    .orient('left');
+
+main.append('g')
+  .attr('transform', 'translate(0,0)')
+  .attr('class', 'main axis date')
+  .call(yAxis);
+
+var g = main.append("svg:g");
+
+g.selectAll("scatter-dots")
+  .data(ydata)
+  .enter().append("svg:circle")
+  .attr("cy", function (d) { return y(d); } )
+  .attr("cx", function (d,i) { return x(xdata[i]); } )
+  .attr("r", 10)
+  .attr("fill", "lightsteelblue")
+  .append("title")
+  .html(function(d, i) { return d + " Photos, " + xdata[i] + " Stars"; });
+
+g.selectAll("x-axis").data(["Rating"]).enter().append("text").attr("x", width/2).attr("y", height+50).attr("text-anchor","middle").text(function(d) { return d; });
+g.selectAll("y-axis").data(["Number of Photos"]).enter().append("text").attr("x", 15).attr("y", height/2 - 50).attr("text-anchor", "middle").attr("transform", function() { return "rotate(270 15 " + height/2 + ")"; }).text(function(d) { return d; });

@@ -1,26 +1,15 @@
 {% extends "base.html" %}
 
 {% block title %}Scatter Plot{% endblock %}
-{% block css %}
-<link rel="stylesheet" href="{{ url_for('static',filename='css/scatter.css') }}">
-{% endblock %}
 
 {% block body %}
-<div style="text-align: center;">
+<center>
   <h2>Number of Photos vs. Rating</h2>
-  Include x-labels: <input id="x" type="checkbox" checked>
-  Include y-labels: <input id="y" type="checkbox" checked>
-  Include point-labels: <input id="point" type="checkbox">
-  <br>
-  Number of x-ticks: <input id="xt" type="number" min="6" max="10" value="6">
-  Number of y-ticks: <input id="yt" type="number" min="2" max="20" value="10">
-  <br> <br>
-  <svg xmlns="http://www.w3.org/2000/svg" width="675" height="675" id="slate"></svg>
-  <br> <br>
-</div>
+  <div id="chart"></div>
+</center>
 {% endblock %}
 
 {% block js %}
-<script src="{{ url_for('static', filename='js/d3.v5.min.js' ) }}"></script>
+<script src="{{ url_for('static', filename='js/d3.v3.min.js' ) }}"></script>
 <script src="{{ url_for('static', filename='js/scatter.js' ) }}"></script>
 {% endblock %}
