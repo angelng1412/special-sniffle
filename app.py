@@ -26,9 +26,13 @@ def heatmap():
 @app.route("/get_bid", methods = ['POST'])
 def get_bid():
     if "name" in request.form:
-        return Response(yelp.get_bid(request.form["name"]))
+        return Response(yelp.get_bid(request.form["name"]), mimetype='text/plain')
     else:
         return redirect( url_for('root'))
+
+@app.route("/get_scatter")
+def get_scatter():
+    return Response(yelp.get_scatter_dataset(), mimetype='text/plain')
 
 if __name__ == "__main__":
     app.debug = True

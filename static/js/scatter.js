@@ -2,11 +2,25 @@ var svg = document.getElementById("slate");
 var width = Number(svg.getAttribute("width"));
 var height = Number(svg.getAttribute("height"));
 var container = d3.select("svg");
-x.length = 500;
-y.length = 500;
+var x = [], y = [];
+var get_data = function() {
+  $.ajax({
+    url: '/get_scatter',
+    success: function(d) {
+      var j = JSON.parse(d);
+      Object.keys(j).forEach(function(key) {
+        x.push(j[key]["rating"]);
+        y.push(j[key]["num_photos"]);
+      });
+    },
+    async: false
+  });
+};
+get_data();
 var x_max = Math.max(...x), y_max = Math.max(...y);
 var x_axis = "Rating";
 var y_axis = "Number of Photos";
+
 
 var clear_svg = function() {
   while (svg.firstChild) svg.removeChild(svg.firstChild);
