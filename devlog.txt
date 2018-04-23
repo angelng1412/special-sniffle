@@ -49,3 +49,6 @@ rewrote pie chart with d3
 adeeburR -- 2018-04-22 19:34:05
 cleaned up scatter plot code
 
+edmondW -- 2018-04-22 20:17:34
+finished piechart
+
