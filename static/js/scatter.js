@@ -1,3 +1,7 @@
+var pluralize = function(word, num) {
+  return (num == 1) ? word : word + "s";
+};
+
 var xdata = [];
 var ydata = [];
 
@@ -5,7 +9,6 @@ var get_data = function() {
   $.ajax({
     url: 'http://localhost:5000/get_scatter',
     success: function(d) {
-      console.log("success");
       var j = JSON.parse(d);
       Object.keys(j).forEach(function(key) {
         xdata.push(j[key]["rating"]);
@@ -69,7 +72,7 @@ g.selectAll("scatter-dots")
   .attr("r", 10)
   .attr("fill", "lightsteelblue")
   .append("title")
-  .html(function(d, i) { return d + " Photos, " + xdata[i] + " Stars"; });
+  .html(function(d, i) { return d + pluralize(" Photo", d) + ", " + xdata[i] + pluralize(" Star", xdata[i]); });
 
 g.selectAll("x-axis").data(["Rating"]).enter().append("text").attr("x", width/2).attr("y", height+50).attr("text-anchor","middle").text(function(d) { return d; });
 g.selectAll("y-axis").data(["Number of Photos"]).enter().append("text").attr("x", 15).attr("y", height/2 - 50).attr("text-anchor", "middle").attr("transform", function() { return "rotate(270 15 " + height/2 + ")"; }).text(function(d) { return d; });
