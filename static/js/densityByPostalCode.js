@@ -97,14 +97,20 @@ var hoverAnimation = function(e){
 	var ycor = e.clientY;
 	var y = ycor - (canvas.height/2);
 	var x = xcor - (canvas.width/2);
-	var angle = Math.atan(y,x);
+	var angle = Math.atan2(y,x);
+	angle = angle * -1;
+	if(angle < 0){
+		angle = angle * -1;
+	}
+	else{
+		angle = (Math.PI - angle) + Math.PI;
+	}
 	for(var i = 0; i < pieData.length; i++){
 		angle = angle - pieData[i][1];
 		if(angle <= 0){
 			ctx.strokeText("Postal Code: " + pieData[i][0],xcor,ycor);
-			ctx.strokeText("Store Precentage: " + (pieData[i][1] / Math.PI)
+			ctx.strokeText("Store Precentage: " + (pieData[i][1] / (Math.PI * 2))
 				 * 100,xcor, ycor + 40);
-			ctx.strokeText("Angle: " + angle, xcor, ycor + 80);
 			break;
 		}
 	}
