@@ -5,8 +5,9 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{% block title %}{% endblock %}</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-    <link rel="stylesheet" href="{{ url_for('static',filename='css/base.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/base.css') }}">
+    {% block css %}{% endblock %}
   </head>
 
   <body>
@@ -27,6 +28,9 @@
           <li class="nav-item">
             <a class="nav-link" href="heatmap">Heatmap</a>
           </li>
+          <li class="nav-item">
+            <a class="nav-link" href="piechart">Pie Chart</a>
+          </li>
         </ul>
       </div>
 
@@ -40,9 +44,15 @@
 
     <div class="content">
       <div class="shadow">
-        <h1>Illinois Businesses</h1>
+        <h1>Improve Your Illinois Business</h1>
         <p>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin placerat placerat massa. Duis sapien magna, viverra sed felis ut, efficitur sodales est. Sed ac elit dictum tellus sodales ultricies eget vel nibh. Mauris non tortor in justo scelerisque commodo. Aenean nisl lorem, feugiat eget facilisis non, iaculis at urna. Ut eget ipsum magna. Phasellus ac mauris arcu. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean aliquam augue turpis, vitae vulputate leo pretium ac. Praesent eleifend mattis purus, nec tempor eros fringilla sollicitudin. Sed commodo, justo sed aliquet ultrices, risus sapien efficitur lectus, at luctus odio magna ut urna.
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin placerat placerat massa. Duis sapien magna, viverra sed felis ut, efficitur sodales est. Sed ac elit dictum tellus sodales ultricies eget vel nibh. Mauris non tortor in justo scelerisque commodo. Aenean nisl lorem, feugiat eget facilisis non, iaculis at urna. Ut eget ipsum magna. Phasellus ac mauris arcu. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean aliquam augue turpis, vitae vulputate leo pretium ac. Praesent eleifend mattis purus, nec tempor eros fringilla sollicitudin. Sed commodo, justo sed aliquet ultrices, risus sapien efficitur lectus, at luctus odio magna ut urna.
+
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin placerat placerat massa. Duis sapien magna, viverra sed felis ut, efficitur sodales est. Sed ac elit dictum tellus sodales ultricies eget vel nibh. Mauris non tortor in justo scelerisque commodo. Aenean nisl lorem, feugiat eget facilisis non, iaculis at urna. Ut eget ipsum magna. Phasellus ac mauris arcu. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean aliquam augue turpis, vitae vulputate leo pretium ac. Praesent eleifend mattis purus, nec tempor eros fringilla sollicitudin. Sed commodo, justo sed aliquet ultrices, risus sapien efficitur lectus, at luctus odio magna ut urna.
+
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin placerat placerat massa. Duis sapien magna, viverra sed felis ut, efficitur sodales est. Sed ac elit dictum tellus sodales ultricies eget vel nibh. Mauris non tortor in justo scelerisque commodo. Aenean nisl lorem, feugiat eget facilisis non, iaculis at urna. Ut eget ipsum magna. Phasellus ac mauris arcu. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean aliquam augue turpis, vitae vulputate leo pretium ac. Praesent eleifend mattis purus, nec tempor eros fringilla sollicitudin. Sed commodo, justo sed aliquet ultrices, risus sapien efficitur lectus, at luctus odio magna ut urna.
+
         </p>
         {% block body %}
         {% endblock %}
@@ -53,6 +63,12 @@
       <br>
       <a href="https://www.yelp.com/dataset">Yelp Dataset</a>
     </div>
+
+    <script src="{{ url_for('static', filename='js/jquery-3.3.1.min.js' ) }}"></script>
+    <script src="{{ url_for('static', filename='js/popper.min.js' ) }}"></script>
+    <script src="{{ url_for('static', filename='js/bootstrap.min.js' ) }}"></script>
+    {% block js %}{% endblock %}
+
   </body>
 
 </html>

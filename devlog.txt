@@ -4,7 +4,7 @@ README and yelp mockup
 marcusN -- 2018-04-11 14:40:22
 worked on reorganizing data
 
-adeebR -- 2018-04-11 14:42:25
+adeeburR -- 2018-04-11 14:42:25
 worked on reorganizing data
 
 edmondW -- 2018-04-11 14:45:10
@@ -13,10 +13,17 @@ added flask files
 marcusN -- 2018-04-12 14:39:55
 worked on scatter plot
 
-adeebR -- 2018-04-12 14:41:35
+adeeburR -- 2018-04-12 14:41:35
 finished scatter plot
+
 edmondW -- 2018-04-17 14:51:13
 worked on pie chart
+
+adeeburR -- 2018-04-18 22:11:20
+added basic checkin visualization
+
+adeeburR -- 2018-04-19 14:46:32
+modified checkin to use business names
 
 edmondW -- 2018-04-20 14:34:29
 pie chart works
@@ -26,4 +33,19 @@ working on sorting data
 
 marcusN -- 2018-04-21 18:35:24
 bootstrap
+
+adeeburR -- 2018-04-21 19:03:06
+Cleaned up html
+
+marcusN -- 2018-04-22 12:13:08
+floating div
+
+adeeburR -- 2018-04-22 13:59:23
+added search and tooltips to heatmap
+
+adeeburR -- 2018-04-22 16:00:14
+rewrote pie chart with d3
+
+adeeburR -- 2018-04-22 19:34:05
+cleaned up scatter plot code
 

@@ -1,126 +1,27 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <style>
-      rect.bordered {
-        stroke: #E6E6E6;
-        stroke-width:2px;
-      }
+{% extends "base.html" %}
 
-      text.mono {
-        font-size: 9pt;
-        font-family: Consolas, courier;
-        fill: #aaa;
-      }
+{% block title %}Heatmap{% endblock %}
 
-      text.axis-workweek {
-        fill: #000;
-      }
+{% block css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/heatmap.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/select2.min.css') }}">
+{% endblock %}
 
-      text.axis-worktime {
-        fill: #000;
-      }
-    </style>
-    <script src="http://d3js.org/d3.v3.js"></script>
-    <script src="{{ url_for('static', filename='js/jquery-3.1.1.min.js' ) }}"></script>
-    <script src="{{ url_for('static', filename='js/popper.min.js' ) }}"></script>
-  </head>
-  <body>
-    <div id="chart" style="text-align: center"></div>
-    <select id="dataset">
-      {% for dataset in datasets %}<option value="{{ dataset }}">{{ dataset }}</option>{% endfor %}
-    </select>
-    <script type="text/javascript">
-      var margin = { top: 50, right: 0, bottom: 100, left: 70 },
-          width = 1200 - margin.left - margin.right,
-          height = 430 - margin.top - margin.bottom,
-          gridSize = Math.floor(width / 24),
-          legendElementWidth = gridSize*2,
-          buckets = 9,
-          colors = ["#ffffd9","#edf8b1","#c7e9b4","#7fcdbb","#41b6c4","#1d91c0","#225ea8","#253494","#081d58"],
-          days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
-          times = ["1:00", "2:00", "3:00", "4:00", "5:00", "6:00", "7:00", "8:00", "9:00", "10:00", "11:00", "12:00", "13:00", "14:00", "15:00", "16:00", "17:00", "18:00", "19:00", "20:00", "21:00", "22:00", "23:00", "0:00"];
+{% block body %}
+<div style="text-align: center;">
+  <h1>Yelp Check-Ins Heatmap</h1>
+  <br>
+  <select id="dataset">
+    {% for dataset in datasets %}<option value="{{ dataset }}">{{ dataset }}</option>
+    {% endfor %}
+  </select>
+  <div id="chart" style="text-align: center"></div>
+  <p>Hover over a specific hour to view the exact number of Yelp Check-Ins</p>
+</div>
+{% endblock %}
 
-      var svg = d3.select("#chart").append("svg")
-                  .attr("width", width + margin.left + margin.right)
-                  .attr("height", height + margin.top + margin.bottom)
-                  .append("g")
-                  .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-
-      var dayLabels = svg.selectAll(".dayLabel")
-                         .data(days)
-                         .enter().append("text")
-                         .text(function (d) { return d; })
-                         .attr("x", 0)
-                         .attr("y", function (d, i) { return i * gridSize; })
-                         .style("text-anchor", "end")
-                         .attr("transform", "translate(-6," + gridSize / 1.5 + ")")
-                         .attr("class", function (d, i) { return "dayLabel mono axis axis-workweek"; });
-
-      var timeLabels = svg.selectAll(".timeLabel")
-                          .data(times)
-                          .enter().append("text")
-                          .text(function(d) { return d; })
-                          .attr("x", function(d, i) { return i * gridSize; })
-                          .attr("y", 0)
-                          .style("text-anchor", "middle")
-                          .attr("transform", "translate(" + gridSize / 2 + ", -6)")
-                          .attr("class", function(d, i) { return "timeLabel mono axis axis-worktime"; });
-
-      var heatmapChart = function(csvFile) {
-        d3.csv(csvFile,
-               function(d) {
-                 return {
-                   day: +d.day,
-                   hour: +d.hour,
-                   value: +d.value
-                 };
-               },
-               function(error, data) {
-                 var colorScale = d3.scale.quantile()
-                                    .domain([0, buckets - 1, d3.max(data, function (d) { return d.value; })])
-                                    .range(colors);
-
-                 var cards = svg.selectAll(".hour")
-                                .data(data, function(d) {return d.day+':'+d.hour;});
-
-                 cards.append("title");
-
-                 cards.enter().append("rect")
-                      .attr("x", function(d) { return (d.hour - 1) * gridSize; })
-                      .attr("y", function(d) { return (d.day - 1) * gridSize; })
-                      .attr("rx", 4)
-                      .attr("ry", 4)
-                      .attr("class", "hour bordered")
-                      .attr("width", gridSize)
-                      .attr("height", gridSize)
-                      .style("fill", colors[0]);
-
-                 cards.transition().duration(1000)
-                      .style("fill", function(d) { return colorScale(d.value); });
-
-                 cards.select("title").text(function(d) { return d.value; });
-
-                 cards.exit().remove();
-
-               });
-      };
-
-      var datapicker = document.getElementById("dataset");
-      var update = function(e) {
-        $.ajax({
-          url: '/get_bid',
-          type: 'POST',
-          data: {"name": datapicker.value},
-          success: function(d) {
-            heatmapChart("/data/csv/" + d);
-          }
-        });
-      };
-      datapicker.addEventListener("change", update);
-      update();
-
-    </script>
-  </body>
-</html>
+{% block js %}
+<script src="{{ url_for('static', filename='js/d3.v3.min.js' ) }}"></script>
+<script src="{{ url_for('static', filename='js/select2.min.js' ) }}"></script>
+<script src="{{ url_for('static', filename='js/heat.js' ) }}"></script>
+{% endblock %}

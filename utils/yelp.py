@@ -4,6 +4,10 @@ csv_path = "data/csv.json"
 scatter_path = "data/scatter.json"
 name_path = "data/names.json"
 
+def get_scatter_dataset():
+    with open(scatter_path) as f:
+        return f.read()
+
 def get_names():
     with open(name_path) as f:
         return json.loads(f.read()).keys()

@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block title %}Pie Chart{% endblock %}
+
+{% block body %}
+<div style="text-align: center;">
+  <h1>Density of Busineses by Postal Code and Rating</h1>
+  <br>
+  Select a Rating:
+  <select id="rating">
+    {% for i in range(2,11) %}<option value="{{ i * 0.5 }}">{{ i * 0.5 }}</option>
+    {% endfor %}
+  </select>
+  <div id="pieChart"></div>
+</div>
+{% endblock %}
+
+{% block js %}
+<script src="{{ url_for('static', filename='js/d3.v5.min.js' ) }}"></script>
+<script src="{{ url_for('static', filename='js/d3pie.min.js' ) }}"></script>
+<script src="{{ url_for('static', filename='js/piechart.js' ) }}"></script>
+{% endblock %}
